@@ -1,0 +1,42 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Consumo de servicios</title>
+  <!-- Agrega los estilos de Bootstrap -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <center style="margin-top: 50px;">
+  <div class="container">
+    <div class="card bg-dark text-white" style="width: 50rem;">
+      <div class="card-body">
+        <h1 >Consumo de Servicios</h1>
+        <div id="dog-images"></div>
+      
+        <script>
+          // Realiza la solicitud a la API de imágenes de gatos
+          fetch('https://dog.ceo/api/breeds/image/random')
+            .then(response => response.json())
+            .then(data => {
+              const imageUrl = data.message;
+              const dogImage = document.createElement('img');
+              dogImage.src = imageUrl;
+              document.getElementById('dog-images').appendChild(dogImage);
+            })
+            .catch(error => {
+              console.error('Error al obtener la imagen del perrito:', error);
+            });
+        </script>
+      </div>
+    </div>
+  </div>
+</center>
+  <!-- Agrega los scripts de Bootstrap -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+
+
