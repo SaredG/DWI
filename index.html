@@ -1,42 +1,111 @@
-
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Consumo de servicios</title>
+  <title>Consumo de servicios</title>
   <!-- Agrega los estilos de Bootstrap -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+
+    .card {
+      margin-top: 100px;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-header {
+      background-color: #343a40;
+      color: #fff;
+      font-weight: bold;
+      text-align: center;
+      padding: 20px;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+    }
+
+    .card-body {
+      text-align: center;
+    }
+
+    #image {
+      max-width: 300px;
+      height: auto;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+
+    #toggle-button {
+      background-color: #007bff;
+      border-color: #007bff;
+      margin-top: 20px;
+    }
+
+    #toggle-button:hover {
+      background-color: #0069d9;
+      border-color: #0062cc;
+    }
+  </style>
 </head>
 <body>
-    <center style="margin-top: 50px;">
   <div class="container">
-    <div class="card bg-dark text-white" style="width: 50rem;">
+    <div class="card">
+      <div class="card-header">
+        <h1>Consumo de servicios</h1>
+      </div>
       <div class="card-body">
-        <h1 >Consumo de Servicios</h1>
-        <div id="dog-images"></div>
-      
-        <script>
-          // Realiza la solicitud a la API de imágenes de gatos
-          fetch('https://dog.ceo/api/breeds/image/random')
-            .then(response => response.json())
-            .then(data => {
-              const imageUrl = data.message;
-              const dogImage = document.createElement('img');
-              dogImage.src = imageUrl;
-              document.getElementById('dog-images').appendChild(dogImage);
-            })
-            .catch(error => {
-              console.error('Error al obtener la imagen del perrito:', error);
-            });
-        </script>
+        <div id="data-container">
+          <img id="image" src="" alt="Imagen">
+        </div>
+        <button id="toggle-button" class="btn btn-primary">Alternar API</button>
       </div>
     </div>
   </div>
-</center>
+
   <!-- Agrega los scripts de Bootstrap -->
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script>
+    const dataContainer = document.getElementById('data-container');
+    const imageElement = document.getElementById('image');
+    const toggleButton = document.getElementById('toggle-button');
+    let currentApi = 'api1';
+
+    function fetchData(api) {
+      if (api === 'api1') {
+        fetch('https://dog.ceo/api/breeds/image/random')
+          .then(response => response.json())
+          .then(data => {
+            const imageUrl = data.message;
+            imageElement.src = imageUrl;
+          })
+          .catch(error => {
+            console.error('Error al obtener la imagen de la API 1:', error);
+          });
+      } else if (api === 'api2') {
+        fetch('https://api.thecatapi.com/v1/images/search')
+          .then(response => response.json())
+          .then(data => {
+            const imageUrl = data[0].url;
+            imageElement.src = imageUrl;
+          })
+          .catch(error => {
+            console.error('Error al obtener la imagen de la API 2:', error);
+          });
+      }
+    }
+
+    toggleButton.addEventListener('click', () => {
+      if (currentApi === 'api1') {
+        currentApi = 'api2';
+      } else {
+        currentApi = 'api1';
+      }
+      fetchData(currentApi);
+    });
+
+    fetchData(currentApi);
+  </script>
 </body>
 </html>
-
-
